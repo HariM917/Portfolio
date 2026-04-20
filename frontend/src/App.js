@@ -7,6 +7,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+// use it somewhere
+setError("Something went wrong");
+
   useEffect(() => {
     fetchProjects();
   }, []);
