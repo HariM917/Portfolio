@@ -9,10 +9,9 @@ function App() {
 
 // use it somewhere
 setError("Something went wrong");
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+useEffect(() => {
+  fetchProjects();
+}, [fetchProjects]);
 
   const fetchProjects = async () => {
     try {
