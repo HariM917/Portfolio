@@ -12,7 +12,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: '[https://portfolio-frontend.onrender.com](https://portfolio-frontend.onrender.com)'
+  origin: 'https://portfolio-frontend.onrender.com'
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
