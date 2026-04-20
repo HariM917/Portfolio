@@ -11,8 +11,10 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Middleware
+// Temporarily allowing all origins so your Render frontend can connect without issues.
+// Once you know your exact frontend URL, you can replace '*' with 'https://your-frontend.onrender.com'
 app.use(cors({
-  origin: 'https://portfolio-frontend.onrender.com'
+  origin: '*'
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
