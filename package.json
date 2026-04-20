@@ -1,0 +1,10 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Full-stack personal portfolio website",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}

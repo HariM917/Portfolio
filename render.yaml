@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: portfolio-backend
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm install --legacy-peer-deps
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        value: mongodb+srv://Hari:harimurali@cluster0.hef713h.mongodb.net/portfolio?retryWrites=true&w=majority
+      - key: FRONTEND_URL
+        value: http://localhost:3000
+      - key: PORT
+        value: 5000
