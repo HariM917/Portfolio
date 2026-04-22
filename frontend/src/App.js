@@ -69,7 +69,7 @@ function App() {
       title: 'Personal Portfolio Website',
       description: 'Full-stack portfolio website showcasing projects with dynamic content management. Built with React frontend and Node.js backend, featuring SEO optimization, responsive design, and MongoDB integration for scalable project storage.',
       technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'CSS3'],
-      link: 'https://yourportfolio.com',
+      link: 'https://917portfolio.vercel.app',
       githubLink: 'https://github.com/HariM917/Portfolio',
       featured: false,
     },
@@ -82,7 +82,7 @@ function App() {
           <h1>Hari M</h1>
           <p className="subtitle">Full-Stack Developer | AI/ML Enthusiast | Problem Solver</p>
           <div className="contact-links">
-            <a href="mailto:harimurali@email.com" target="_blank" rel="noopener noreferrer">Email</a>
+            <a href="mailto:harimurali10a@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
             <a href="https://github.com/HariM917" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/harim917" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
