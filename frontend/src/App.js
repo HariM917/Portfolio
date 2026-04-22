@@ -73,6 +73,15 @@ function App() {
       githubLink: 'https://github.com/HariM917/Portfolio',
       featured: false,
     },
+    {
+       _id: '6',
+      title: 'Task Manager ',
+      description: 'Full-stack task management application with real-time collaboration features. Built with React frontend and Node.js backend, featuring intuitive UI, seamless integration, and MongoDB for data persistence.',
+      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'CSS3'],
+      link: 'https://taskmanager-beta-opal.vercel.app',
+      githubLink: 'https://github.com/HariM917/Task-Manager',
+      featured: false,
+    }
   ];
 
   return (
