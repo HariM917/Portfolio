@@ -54,17 +54,9 @@ function App() {
       githubLink: 'https://github.com/HariM917/DocumentIntelligence',
       featured: false,
     },
+    
     {
       _id: '4',
-      title: 'AI Resume Screening & Candidate Matching System',
-      description: 'Intelligent resume analysis system using TF-IDF and cosine similarity for job-candidate matching. Automatically parses resumes, extracts skills, and ranks candidates based on job description alignment. Reduces bias in hiring, provides Excel/DB export capabilities, and achieves 95% accuracy in skill matching.',
-      technologies: ['Python', 'TF-IDF', 'NLP', 'scikit-learn', 'FastAPI', 'React', 'MongoDB'],
-      link: 'https://resume-matcher.example.com',
-      githubLink: 'https://github.com/HariM917/ResumeMatcher',
-      featured: false,
-    },
-    {
-      _id: '5',
       title: 'Real-Time Multilingual Lecture Assistant',
       description: 'AI-powered educational tool providing live lecture transcription, multilingual translation, and auto-generated summaries. Leverages OpenAI Whisper for speech-to-text, supports 50+ languages, and uses BART for intelligent note generation. Improves accessibility and helps students overcome language barriers in education.',
       technologies: ['Whisper API', 'BART', 'Python', 'React', 'Translation APIs', 'FastAPI'],
@@ -73,7 +65,7 @@ function App() {
       featured: false,
     },
     {
-      _id: '6',
+      _id: '5',
       title: 'Personal Portfolio Website',
       description: 'Full-stack portfolio website showcasing projects with dynamic content management. Built with React frontend and Node.js backend, featuring SEO optimization, responsive design, and MongoDB integration for scalable project storage.',
       technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'CSS3'],
