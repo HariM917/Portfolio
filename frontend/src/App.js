@@ -7,26 +7,24 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-// use it somewhere
-setError("Something went wrong");
-useEffect(() => {
-  fetchProjects();
-}, [fetchProjects]);
-
-  const fetchProjects = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        (process.env.REACT_APP_API_URL || 'https://portfolio-backend-qw1a.onrender.com/') + '/api/projects'
-      );
-      setProjects(response.data);
-    } catch (err) {
-      console.log('Using default projects');
-      setProjects(defaultProjects);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          (process.env.REACT_APP_API_URL || 'https://portfolio-backend-qw1a.onrender.com') + '/api/projects'
+        );
+        setProjects(response.data);
+      } catch (err) {
+        console.log('Using default projects');
+        setError(null);
+        setProjects(defaultProjects);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const defaultProjects = [
     {
