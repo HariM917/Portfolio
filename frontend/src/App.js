@@ -295,7 +295,7 @@ function App() {
           <h2>Get In Touch</h2>
           <p>I'm open to opportunities, collaborations, and interesting projects. Feel free to reach out!</p>
           <div className="contact-methods">
-            <a href="mailto:harimurali@email.com" className="contact-btn email-btn">
+            <a href="mailto:harimurali10a@gmail.com" className="contact-btn email-btn">
               📧 Email Me
             </a>
             <a href="https://github.com/HariM917" target="_blank" rel="noopener noreferrer" className="contact-btn github-btn">
