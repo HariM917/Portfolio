@@ -38,7 +38,7 @@ const mockProjects = [
     description: 'AI-powered educational tool providing live lecture transcription, multilingual translation, and auto-generated summaries. Leverages OpenAI Whisper for speech-to-text, supports 50+ languages, and uses BART for intelligent note generation. Improves accessibility and helps students overcome language barriers in education.',
     technologies: ['Whisper API', 'BART', 'Python', 'React', 'Translation APIs', 'FastAPI'],
  
-    githubLink: 'https://github.com/HariM917/LectureAssistant',
+    githubLink: 'https://github.com/HariM917/Lecture_Assistant',
     featured: false,
   },
   {
