@@ -43,11 +43,10 @@ const mockProjects = [
   },
   {
     _id: '6',
-    title: 'Personal Portfolio Website',
-    description: 'Full-stack portfolio website showcasing projects with dynamic content management. Built with React frontend and Node.js backend, featuring SEO optimization, responsive design, and MongoDB integration for scalable project storage.',
-    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'CSS3'],
-    link: 'https://yourportfolio.com',
-    githubLink: 'https://github.com/HariM917/Portfolio',
+    title: 'Tamil Nadu Smart Public Transport Platform',
+    description: 'An intelligent public transit management and passenger information system for Tamil Nadu. Features real-time bus/train tracking, dynamic route optimization, integrated smart ticketing, and commuter dashboards. Leverages IoT sensors and location APIs to provide live transit updates and improve overall commuting efficiency.',
+    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'IoT', 'Google Maps API'],
+    githubLink: 'https://github.com/HariM917/Tamil-Nadu-Smart-Public-Transport-Platform',
     featured: false,
   },
 ];
