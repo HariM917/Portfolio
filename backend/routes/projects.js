@@ -9,7 +9,7 @@ const mockProjects = [
     title: 'Applicant Tracking System (ATS)',
     description: 'AI-powered recruitment platform featuring resume screening with NLP-based candidate ranking. Streamlines hiring workflows with automated resume analysis, candidate ranking, admin dashboard, and real-time status tracking. Reduces hiring time by 60% through intelligent candidate-job matching.',
     technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'NLP'],
-    link: 'https://ats-brown.vercel.app/',
+    link: 'https://ats-silk-alpha.vercel.app/',
     githubLink: 'https://github.com/HariM917/ATS',
     featured: true,
   },
