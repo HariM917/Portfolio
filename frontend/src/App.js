@@ -427,13 +427,13 @@ function App() {
 
           <div className="contact-links-row reveal" ref={addRevealRef}>
             <a href="mailto:harimurali10a@gmail.com" className="contact-link">
-              harimurali10a@gmail.com
+              <span>harimurali10a@gmail.com</span>
             </a>
             <a href="https://github.com/HariM917" target="_blank" rel="noopener noreferrer" className="contact-link">
-              GitHub
+              <span>GitHub</span>
             </a>
             <a href="https://www.linkedin.com/in/harim917" target="_blank" rel="noopener noreferrer" className="contact-link">
-              LinkedIn
+              <span>LinkedIn</span>
             </a>
           </div>
         </div>
