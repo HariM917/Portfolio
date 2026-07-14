@@ -142,9 +142,40 @@ function App() {
 
   // Skills data
   const skills = {
-    'Languages & Frameworks': ['React.js', 'Node.js', 'Express.js', 'Python', 'FastAPI', 'JavaScript ES6+', 'HTML5', 'CSS3'],
-    'AI & Machine Learning': ['PyTorch', 'TensorFlow', 'YOLO', 'spaCy', 'scikit-learn', 'BART', 'Whisper', 'NLP', 'Reinforcement Learning'],
-    'Data & Infrastructure': ['MongoDB', 'MySQL', 'REST APIs', 'Docker', 'AWS', 'Git', 'Tesseract OCR'],
+    'Programming Languages': ['Python', 'Java', 'C', 'C++'],
+    'Web Development': ['HTML', 'CSS', 'JavaScript', 'React.js', 'Responsive Web Design', 'Vite', 'Tailwind CSS'],
+    'AI/ML Technologies': [
+      'Machine Learning',
+      'Deep Learning',
+      'TensorFlow',
+      'PyTorch',
+      'RAG',
+      'FAISS',
+      'Hugging Face Transformers',
+      'Sentence Transformers',
+      'Scikit-learn',
+      'Semantic Search',
+      'Model Evaluation',
+      'Model Deployment',
+      'Google Gemini API',
+      'Natural Language Processing (NLP)',
+      'Pandas',
+      'Numpy',
+      'Data Analysis'
+    ],
+    'Databases': ['SQLite', 'MySQL', 'MongoDB', 'PostgreSQL'],
+    'Tools & Software': ['Git', 'Docker', 'Flask', 'FastAPI'],
+    'Cloud & DevOps': ['AWS Fundamentals', 'Azure Fundamentals', 'Kubernetes', 'CI/CD Pipelines'],
+    'Methodologies': ['Agile Development'],
+    'Soft Skills': [
+      'Communication & Teamwork',
+      'Problem Solving',
+      'Analytical Thinking',
+      'Adaptability',
+      'Time Management',
+      'Continuous Learning',
+      'Multilingual Communication'
+    ]
   };
 
   // Highlights data
