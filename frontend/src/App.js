@@ -16,6 +16,21 @@ const GithubIcon = () => (
   </svg>
 );
 
+const MailIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
+const LinkedinIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 function App() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -426,14 +441,14 @@ function App() {
           </p>
 
           <div className="contact-links-row reveal" ref={addRevealRef}>
-            <a href="mailto:harimurali10a@gmail.com" className="contact-link">
-              <span>harimurali10a@gmail.com</span>
+            <a href="mailto:harimurali10a@gmail.com" className="btn-primary">
+              <MailIcon /> Email <ArrowUpRight />
             </a>
-            <a href="https://github.com/HariM917" target="_blank" rel="noopener noreferrer" className="contact-link">
-              <span>GitHub</span>
+            <a href="https://github.com/HariM917" target="_blank" rel="noopener noreferrer" className="btn-primary">
+              <GithubIcon /> GitHub <ArrowUpRight />
             </a>
-            <a href="https://www.linkedin.com/in/harim917" target="_blank" rel="noopener noreferrer" className="contact-link">
-              <span>LinkedIn</span>
+            <a href="https://www.linkedin.com/in/harim917" target="_blank" rel="noopener noreferrer" className="btn-primary">
+              <LinkedinIcon /> LinkedIn <ArrowUpRight />
             </a>
           </div>
         </div>
