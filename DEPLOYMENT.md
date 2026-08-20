@@ -165,6 +165,24 @@ db.projects.insertOne({
 
 ---
 
+## Keeping Free Backend Awake
+
+Free hosting plans (e.g., Render free tier) spin down web services after 15 minutes of inactivity, causing ~50-second cold start delays.
+
+To keep the free backend awake:
+
+1. **Health Check Endpoint**:
+   - `GET /health` (or `GET /api/health`) returns `{"status": "ok"}` without triggering heavy database calls.
+
+2. **External Uptime Monitoring Services**:
+   - **UptimeRobot** (https://uptimerobot.com): Create a free HTTP monitor pointing to `https://your-backend.onrender.com/health` with a 5-minute interval.
+   - **Better Stack / Cron-job.org / Freshping**: Set up periodic GET requests to your `/health` URL.
+
+3. **GitHub Actions (Built-in)**:
+   - A workflow is included at `.github/workflows/keep_alive.yml` that pings `/health` every 14 minutes automatically.
+
+---
+
 ## Troubleshooting
 
 ### CORS Errors

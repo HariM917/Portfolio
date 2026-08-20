@@ -22,9 +22,13 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/projects', projectRoutes);
 
-// Health check route
+// Health check routes
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Server is running' });
+});
+
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  res.json({ status: 'ok', message: 'Server is running' });
 });
 
 // Root route
