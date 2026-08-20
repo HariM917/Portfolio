@@ -1,23 +1,21 @@
 services:
-  # Backend Service
+  # FastAPI RAG Chatbot Backend
   - type: web
-    name: portfolio-backend
-    env: node
+    name: portfolio-rag-backend
+    env: python
     region: oregon
     plan: free
     rootDir: backend
-    buildCommand: npm install
-    startCommand: npm start
-
-  # Frontend Service (Create React App)
-  - type: static
-    name: portfolio-frontend
-    env: static
-    region: oregon
-    plan: free
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    publishPath: build
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: REACT_APP_API_URL
-        value: https://portfolio-backend-qw1a.onrender.com
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: ENVIRONMENT
+        value: production
+      - key: EMBEDDING_MODEL_NAME
+        value: sentence-transformers/all-MiniLM-L6-v2
+      - key: TOP_K
+        value: 3
+      - key: SIMILARITY_THRESHOLD
+        value: 0.25

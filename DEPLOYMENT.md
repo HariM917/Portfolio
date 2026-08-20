@@ -1,247 +1,61 @@
-# Portfolio Deployment Guide
+# Deployment Guide — Portfolio & FastAPI RAG Backend
 
-## Quick Start - Local Development
-
-### 1. Backend Setup (First Terminal)
-```bash
-cd backend
-npm install
-cp .env.example .env
-# Edit .env with your MongoDB URI
-npm run dev
-```
-
-### 2. Frontend Setup (Second Terminal)
-```bash
-cd frontend
-npm install
-cp .env.example .env
-npm start
-```
-
-Visit `http://localhost:3000`
+This guide walks you through deploying your portfolio architecture:
+- **Frontend:** Vercel (Static hosting with zero-delay edge CDN)
+- **Backend:** Render (Python FastAPI RAG web service)
 
 ---
 
-## Deployment Guide
+## 1. Deploying the Backend on Render
 
-### Option A: Deploy on Vercel (Recommended for Full-Stack)
-
-**Advantages**: Easy deployment, automatic HTTPS, serverless functions, great performance
-
-**Steps:**
-
-1. **Prepare repository**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git push origin main
-   ```
-
-2. **Connect to Vercel**
-   - Go to https://vercel.com
-   - Click "New Project"
-   - Import your GitHub/GitLab repository
-
-3. **Configure environment variables**
-   - In Vercel dashboard, go to Settings → Environment Variables
-   - Add: `MONGODB_URI` (your MongoDB connection string)
-   - Add: `FRONTEND_URL` (your Vercel deployment URL)
-
-4. **Deploy**
-   - Click Deploy
-   - Wait for build to complete
-
-### Option B: Deploy Frontend on Netlify, Backend on Heroku
-
-**Frontend on Netlify:**
-1. Build your React app: `npm run build` (creates `build/` folder)
-2. Go to https://netlify.com → New site from Git
-3. Select your repository and deploy
-4. Update `REACT_APP_API_URL` to your backend URL
-
-**Backend on Heroku:**
-1. Create Heroku account and install CLI
-2. In backend directory:
-   ```bash
-   cd backend
-   heroku create your-app-name
-   ```
-3. Set environment variables:
-   ```bash
-   heroku config:set MONGODB_URI=your_mongodb_uri
-   heroku config:set FRONTEND_URL=your_netlify_url
-   ```
-4. Deploy:
-   ```bash
-   git push heroku main
-   ```
+1. Log in to your [Render Dashboard](https://dashboard.render.com/).
+2. Click **New +** → **Web Service**.
+3. Connect your GitHub repository: `HariM917/Portfolio`.
+4. Fill in the configuration:
+   - **Name:** `portfolio-rag-backend`
+   - **Region:** Oregon (US West) or Singapore
+   - **Root Directory:** `backend`
+   - **Runtime:** `Python 3`
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+   - **Instance Type:** `Free`
+5. Under **Environment Variables**, add:
+   - `PYTHON_VERSION` = `3.11.9`
+   - `ENVIRONMENT` = `production`
+6. Click **Deploy Web Service**.
+7. Once deployed, copy your Render URL: e.g., `https://portfolio-rag-backend-xxxx.onrender.com`.
+8. Verify deployment by visiting: `https://portfolio-rag-backend-xxxx.onrender.com/health`
 
 ---
 
-## MongoDB Atlas Setup
+## 2. Deploying the Frontend on Vercel
 
-1. Go to https://cloud.mongodb.com
-2. Create free account
-3. Create new project
-4. Build a cluster (choose free tier)
-5. Create database user with password
-6. Get connection string from "Connect" button
-7. Replace `<username>`, `<password>`, and database name
-8. Add to `.env` as `MONGODB_URI`
-
----
-
-## Database Configuration
-
-### Creating Collections
-
-The backend automatically creates collections when needed.
-
-### Sample Data Insert
-
-```bash
-# Using MongoDB Atlas client or Compass
-db.projects.insertOne({
-  title: "E-Commerce Platform",
-  description: "Full-featured shopping cart",
-  technologies: ["React", "Node.js", "MongoDB"],
-  link: "https://yoursite.com",
-  githubLink: "https://github.com/user/ecommerce",
-  featured: true,
-  createdAt: new Date()
-})
-```
+1. Log in to [Vercel](https://vercel.com).
+2. Click **Add New...** → **Project**.
+3. Import your GitHub repository: `HariM917/Portfolio`.
+4. Configure project settings:
+   - **Framework Preset:** `Create React App`
+   - **Root Directory:** `frontend`
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `build`
+5. Add **Environment Variables**:
+   - `REACT_APP_API_URL` = `https://portfolio-rag-backend-xxxx.onrender.com` (Your Render URL from Step 1)
+   - `VITE_API_URL` = `https://portfolio-rag-backend-xxxx.onrender.com`
+6. Click **Deploy**.
 
 ---
 
-## Domain & HTTPS
+## 3. Post-Deployment Verification
 
-### Vercel
-- HTTPS is automatic
-- Add custom domain in Settings → Domains
-
-### Netlify
-- HTTPS is automatic
-- Add custom domain in Domain settings
-
-### Heroku Backend
-- HTTPS included
-- Custom domain setup in Settings → Domains
-
----
-
-## Environment Variables Checklist
-
-**Backend (.env)**
-- [ ] `MONGODB_URI` = MongoDB connection string
-- [ ] `PORT` = 5000 (or your choice)
-- [ ] `NODE_ENV` = development/production
-- [ ] `FRONTEND_URL` = your frontend URL
-
-**Frontend (.env)**
-- [ ] `REACT_APP_API_URL` = your backend URL
-
----
-
-## Monitoring & Maintenance
-
-### Vercel
-- Dashboard shows deployment status and logs
-- Analytics available for performance tracking
-
-### Netlify
-- Build logs and deployment history visible
-- Real-time monitoring available
-
-### Heroku
-- View logs: `heroku logs --tail`
-- View metrics in dashboard
-
-### MongoDB
-- Monitor database in Atlas dashboard
-- Check query performance in Performance Advisor
-
----
-
-## Keeping Free Backend Awake
-
-Free hosting plans (e.g., Render free tier) spin down web services after 15 minutes of inactivity, causing ~50-second cold start delays.
-
-To keep the free backend awake:
-
-1. **Health Check Endpoint**:
-   - `GET /health` (or `GET /api/health`) returns `{"status": "ok"}` without triggering heavy database calls.
-
-2. **External Uptime Monitoring Services**:
-   - **UptimeRobot** (https://uptimerobot.com): Create a free HTTP monitor pointing to `https://your-backend.onrender.com/health` with a 5-minute interval.
-   - **Better Stack / Cron-job.org / Freshping**: Set up periodic GET requests to your `/health` URL.
-
-3. **GitHub Actions (Built-in)**:
-   - A workflow is included at `.github/workflows/keep_alive.yml` that pings `/health` every 14 minutes automatically.
-
----
-
-## Troubleshooting
-
-### CORS Errors
-Check that `FRONTEND_URL` environment variable matches your actual frontend URL
-
-### Database connection fails
-1. Check MongoDB URI is correct
-2. Verify IP whitelist in MongoDB Atlas
-3. Ensure database user has correct permissions
-
-### Frontend axios requests failing
-1. Verify backend is running
-2. Check `REACT_APP_API_URL` is correct
-3. Ensure CORS is properly configured
-
-### Build failures on Vercel
-1. Check all environment variables are set
-2. Verify dependencies in package.json
-3. Check for TypeScript errors
-
----
-
-## Performance Tips
-
-1. **Images**: Use optimized formats (WebP), lazy loading
-2. **Code splitting**: React automatically code-splits
-3. **Database indexing**: Add indexes to frequently queried fields
-4. **Caching**: Set appropriate cache headers
-5. **Compression**: Enable gzip compression (automatic on Vercel)
-
----
-
-## Security Best Practices
-
-1. ✅ Never commit `.env` files
-2. ✅ Use environment variables for secrets
-3. ✅ Enable MongoDB IP whitelist
-4. ✅ Use strong database passwords
-5. ✅ Keep dependencies updated: `npm audit`
-6. ✅ Use HTTPS only
-7. ✅ Validate all inputs
-8. ✅ Review error messages before production
-
----
-
-## Additional Resources
-
-- [Vercel Docs](https://vercel.com/docs)
-- [MongoDB Atlas Docs](https://docs.mongodb.com/atlas/)
-- [Express.js Guide](https://expressjs.com/)
-- [React Docs](https://react.dev/)
-
----
-
-## Support
-
-For issues:
-1. Check this guide first
-2. Review server logs: `npm run dev` output
-3. Check browser console for frontend errors
-4. Review MongoDB Atlas logs
-5. Open GitHub issue with error details
+1. Open your Vercel URL in a new browser tab.
+2. Confirm that:
+   - Header, Hero, About, Projects, Skills, Education, Certifications, and Contact render **instantly**.
+   - No `...` loading dots appear in the Projects section.
+   - Click the **Ask AI** floating widget in the bottom-right.
+   - Send test questions like:
+     - *"What projects has Hari built?"*
+     - *"Tell me about TalentFlow"*
+     - *"What are his AI/ML skills?"*
+3. If Render was asleep, observe that the chatbot displays:
+   *"AI assistant is waking up on Render (may take ~15s)..."*
+   and then seamlessly delivers the answer once Render spins up, without disrupting the main website.

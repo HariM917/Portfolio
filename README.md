@@ -1,202 +1,176 @@
-# Personal Portfolio Website
+# Hari M — AI/ML Engineer & Fullstack Developer Portfolio with RAG Chatbot
 
-A full-stack portfolio application to showcase your projects and skills.
-
-## 🚀 Tech Stack
-
-- **Frontend**: React.js, CSS
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Deployment**: Vercel
-
-## 📋 Features
-
-- Responsive design that works on all devices
-- Project showcase with filtering and sorting
-- Skills section with categories
-- RESTful API for project management
-- MongoDB database for persistent storage
-- CI/CD ready with Vercel deployment
-
-## 🛠️ Installation
-
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB Atlas account (free)
-- Git
-
-### Backend Setup
-
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file based on `.env.example`:
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Update `.env` with your MongoDB connection string:
-   ```
-   MONGODB_URI=mongodb+srv://your-username:your-password@cluster.mongodb.net/portfolio?retryWrites=true&w=majority
-   PORT=5000
-   NODE_ENV=development
-   FRONTEND_URL=http://localhost:3000
-   ```
-
-5. Start the backend server:
-   ```bash
-   npm run dev
-   ```
-   The backend will run on `http://localhost:5000`
-
-### Frontend Setup
-
-1. In a new terminal, navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file:
-   ```bash
-   REACT_APP_API_URL=http://localhost:5000
-   ```
-
-4. Start the React development server:
-   ```bash
-   npm start
-   ```
-   The frontend will run on `http://localhost:3000`
-
-## 📚 Project Structure
-
-```
-portfolio/
-├── frontend/                 # React application
-│   ├── public/              # Static files
-│   ├── src/
-│   │   ├── App.js           # Main component
-│   │   ├── App.css          # Styling
-│   │   └── index.js         # Entry point
-│   └── package.json
-├── backend/                  # Express.js API
-│   ├── config/
-│   │   └── db.js            # MongoDB connection
-│   ├── models/
-│   │   └── Project.js       # Project schema
-│   ├── routes/
-│   │   └── projects.js      # API endpoints
-│   ├── server.js            # Express server
-│   └── package.json
-└── vercel.json              # Vercel deployment config
-```
-
-## 🔌 API Endpoints
-
-### Projects
-- `GET /api/projects` - Get all projects
-- `GET /api/projects/featured` - Get featured projects
-- `GET /api/projects/:id` - Get single project
-- `POST /api/projects` - Create new project
-- `PATCH /api/projects/:id` - Update project
-- `DELETE /api/projects/:id` - Delete project
-
-## 💾 MongoDB Setup
-
-1. Create a free account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a new cluster
-3. Add a database user with read/write permissions
-4. Get your connection string and add it to `.env`
-
-## 🚢 Deployment to Vercel
-
-### Via Vercel CLI
-
-1. Install Vercel CLI:
-   ```bash
-   npm install -g vercel
-   ```
-
-2. Login to Vercel:
-   ```bash
-   vercel login
-   ```
-
-3. Deploy:
-   ```bash
-   vercel
-   ```
-
-### Via GitHub Integration
-
-1. Push your code to GitHub
-2. Go to [Vercel Dashboard](https://vercel.com/dashboard)
-3. Click "New Project"
-4. Import your GitHub repository
-5. Add environment variables:
-   - `MONGODB_URI`: Your MongoDB connection string
-   - `FRONTEND_URL`: Your deployed frontend URL
-6. Deploy!
-
-## 📝 Sample Project Data
-
-To add sample projects, use this cURL command:
-
-```bash
-curl -X POST http://localhost:5000/api/projects \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "E-Commerce Platform",
-    "description": "A full-featured e-commerce platform built with React and Node.js",
-    "technologies": ["React", "Node.js", "MongoDB", "Stripe"],
-    "link": "https://example.com",
-    "githubLink": "https://github.com/username/ecommerce",
-    "featured": true
-  }'
-```
-
-## 🔒 Security Considerations
-
-- Never commit `.env` file to version control
-- Use environment variables for sensitive data
-- Validate input on both frontend and backend
-- Keep dependencies updated
-- Use HTTPS for all communications
-
-## 📈 Next Steps to Enhance
-
-- Add authentication (JWT)
-- Implement admin panel for project management
-- Add email contact form
-- Integrate blog/articles section
-- Add social media links
-- Implement search and filtering
-- Add dark mode toggle
-- Performance optimization (image lazy loading, etc.)
-
-## 🤝 Contributing
-
-Feel free to fork this project and customize it for your portfolio!
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 📞 Contact
-
-For questions or support, please open an issue on GitHub.
+A high-performance personal portfolio website for **Hari M**, featuring instant static loading and an interactive **Retrieval-Augmented Generation (RAG)** AI Chatbot powered by **FastAPI**, **SentenceTransformers**, and **FAISS**.
 
 ---
 
-**Happy coding! 🎉**
+## 🌟 Key Architecture Highlights
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    FRONTEND (React.js)                      │
+│  Loads immediately with zero backend network delay          │
+│  - About & Stats            - Education (Vel Tech High Tech)│
+│  - Categorized Skills       - Certifications (Infosys / SIH)│
+│  - Static Project Cards     - Direct Contact & Socials      │
+└──────────────────────────────┬──────────────────────────────┘
+                               │ (Only AI Chatbot Queries)
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 BACKEND (Python FastAPI)                    │
+│  - /health (monitoring)                                     │
+│  - /api/chat (semantic query processing)                    │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                RAG ENGINE & VECTOR STORE                    │
+│  - Embeddings: sentence-transformers/all-MiniLM-L6-v2       │
+│  - Vector Index: FAISS IndexFlatIP (Cosine Similarity)      │
+│  - Knowledge Base: backend/data/portfolio_knowledge.txt     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+- **Instant Load Guarantee:** The entire portfolio (About, Skills, Projects, Education, Certifications, Contact) renders purely from static data files in `src/data/` with **zero network dependency**.
+- **Render Sleep Resilience:** If the free-tier Render backend is asleep, the portfolio website loads immediately at full speed. Only the chatbot gracefully displays a wake-up banner while spinning up.
+- **RAG-Powered AI Assistant:** Visitors can ask natural language questions about Hari's background, skills, and systems with grounded, hallucination-free answers.
+
+---
+
+## 📂 Project Structure
+
+```
+Portfolio/
+├── frontend/                     # React Frontend Application
+│   ├── public/
+│   │   └── index.html            # SEO metadata and Open Graph tags
+│   ├── src/
+│   │   ├── components/           # Modular UI Components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   ├── About.jsx
+│   │   │   ├── Skills.jsx
+│   │   │   ├── Projects.jsx      # Static project showcase
+│   │   │   ├── Education.jsx     # Academic timeline
+│   │   │   ├── Certifications.jsx# Credentials & SIH 2025
+│   │   │   ├── Contact.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── Chatbot/          # Floating AI Assistant
+│   │   │       ├── Chatbot.jsx
+│   │   │       ├── ChatMessage.jsx
+│   │   │       └── ChatInput.jsx
+│   │   ├── data/                 # Ground Truth Static Data
+│   │   │   ├── projects.js       # Verified projects & descriptions
+│   │   │   ├── skills.js         # Categorized tech stack
+│   │   │   └── resume.js         # Education, certifications, socials
+│   │   ├── App.js
+│   │   ├── App.css
+│   │   └── index.js
+│   ├── .env                      # REACT_APP_API_URL / VITE_API_URL
+│   └── package.json
+│
+├── backend/                      # Python FastAPI RAG Backend
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py               # FastAPI app & CORS configuration
+│   │   ├── rag.py                # FAISS vector search & answer synthesis
+│   │   ├── embeddings.py         # SentenceTransformers loader
+│   │   ├── schemas.py            # Pydantic request/response models
+│   │   └── config.py             # Environment configuration
+│   ├── data/
+│   │   └── portfolio_knowledge.txt # RAG Knowledge Base
+│   ├── requirements.txt          # Python production dependencies
+│   └── README.md
+│
+├── render.yaml                   # Render Blueprint for backend
+├── vercel.json                   # Vercel deployment configuration
+└── README.md
+```
+
+---
+
+## 🚀 Local Development Setup
+
+### 1. Run Backend (FastAPI RAG)
+
+```bash
+cd backend
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start backend server
+python -m uvicorn app.main:app --reload --port 8001
+```
+
+- API runs at: `http://localhost:8001`
+- Health check: `http://localhost:8001/health`
+- Interactive docs: `http://localhost:8001/docs`
+
+### 2. Run Frontend (React)
+
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+```
+
+- App runs at: `http://localhost:3000`
+
+---
+
+## 🌐 Production Deployment
+
+### Frontend (Deploy to Vercel)
+
+1. Connect your repository to **Vercel**.
+2. Set Root Directory to `frontend`.
+3. Build Command: `npm run build`
+4. Output Directory: `build`
+5. Add Environment Variable:
+   - `REACT_APP_API_URL`: `https://your-rag-backend.onrender.com`
+   - `VITE_API_URL`: `https://your-rag-backend.onrender.com`
+
+### Backend (Deploy to Render)
+
+1. Create a **New Web Service** on [Render](https://render.com).
+2. Connect your GitHub repository.
+3. Configure service settings:
+   - **Root Directory:** `backend`
+   - **Environment:** `Python 3`
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+4. Environment Variables:
+   - `PYTHON_VERSION`: `3.11.9`
+   - `ENVIRONMENT`: `production`
+
+---
+
+## ✏️ How to Update Information
+
+| To Update... | Modify File |
+| :--- | :--- |
+| **Projects** | `frontend/src/data/projects.js` & `backend/data/portfolio_knowledge.txt` |
+| **Skills** | `frontend/src/data/skills.js` & `backend/data/portfolio_knowledge.txt` |
+| **Education / Certifications** | `frontend/src/data/resume.js` & `backend/data/portfolio_knowledge.txt` |
+| **RAG Knowledge Base** | `backend/data/portfolio_knowledge.txt` |
+
+---
+
+## 📄 Verified Profile Summary
+
+- **Name:** Hari M (HARI.M)
+- **Headline:** AI/ML Engineer | Fullstack Developer
+- **Education:** B.E. in CSE (AI & ML) @ Vel Tech High Tech (CGPA: 7.61 / 10.0, Graduating 2028)
+- **Certifications:** Infosys Springboard (Machine Learning, AI with Python, Java), SIH 2025 Participant
+- **Featured Systems:**
+  - **TalentFlow:** AI Hiring Intelligence ATS with FAISS & RAG (+30% candidate discovery boost)
+  - **AI Emergency Response System:** 3D tactical spatial mapping & rapid crisis dispatch
