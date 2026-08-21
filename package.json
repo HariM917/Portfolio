@@ -1,10 +1,14 @@
 {
   "name": "portfolio",
   "version": "1.0.0",
-  "description": "Full-stack personal portfolio website",
+  "description": "Hari M — Personal AI/ML Engineer Portfolio with Voiceflow AI Chatbot",
   "private": true,
+  "scripts": {
+    "start": "npm --prefix frontend start",
+    "build": "npm --prefix frontend run build",
+    "test": "npm --prefix frontend test"
+  },
   "workspaces": [
-    "frontend",
-    "backend"
+    "frontend"
   ]
 }

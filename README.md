@@ -1,45 +1,44 @@
-# Hari M — AI/ML Engineer & Fullstack Developer Portfolio with RAG Chatbot
+# Hari M — AI/ML Engineer & Fullstack Developer Portfolio with Voiceflow AI Chatbot
 
-A high-performance personal portfolio website for **Hari M**, featuring instant static loading and an interactive **Retrieval-Augmented Generation (RAG)** AI Chatbot powered by **FastAPI**, **SentenceTransformers**, and **FAISS**.
+A high-performance personal portfolio website for **Hari M**, featuring instant static loading and an interactive **Voiceflow-powered AI Chatbot** with grounded knowledge retrieval.
 
 ---
 
-## 🌟 Key Architecture Highlights
+## 🌟 Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    FRONTEND (React.js)                      │
-│  Loads immediately with zero backend network delay          │
-│  - About & Stats            - Education (Vel Tech High Tech)│
-│  - Categorized Skills       - Certifications (Infosys / SIH)│
-│  - Static Project Cards     - Direct Contact & Socials      │
-└──────────────────────────────┬──────────────────────────────┘
-                               │ (Only AI Chatbot Queries)
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│                 BACKEND (Python FastAPI)                    │
-│  - /health (monitoring)                                     │
-│  - /api/chat (semantic query processing)                    │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│                RAG ENGINE & VECTOR STORE                    │
-│  - Embeddings: sentence-transformers/all-MiniLM-L6-v2       │
-│  - Vector Index: FAISS IndexFlatIP (Cosine Similarity)      │
-│  - Knowledge Base: backend/data/portfolio_knowledge.txt     │
-└─────────────────────────────────────────────────────────────┘
+```text
+                         VERCEL
+                           |
+                   React Portfolio
+                           |
+       ┌───────────────────┼───────────────────┐
+       |                   |                   |
+     About              Projects             Skills
+    STATIC               STATIC              STATIC
+       |                   |                   |
+       └───────────────────┼───────────────────┘
+                           |
+                    Voiceflow Webchat
+                           |
+                           ↓
+                    Voiceflow Agent
+                           |
+                           ↓
+                  Voiceflow Knowledge Base
+                           |
+                           ↓
+                  AI-generated answers
 ```
 
-- **Instant Load Guarantee:** The entire portfolio (About, Skills, Projects, Education, Certifications, Contact) renders purely from static data files in `src/data/` with **zero network dependency**.
-- **Render Sleep Resilience:** If the free-tier Render backend is asleep, the portfolio website loads immediately at full speed. Only the chatbot gracefully displays a wake-up banner while spinning up.
-- **RAG-Powered AI Assistant:** Visitors can ask natural language questions about Hari's background, skills, and systems with grounded, hallucination-free answers.
+- **Instant Load Guarantee:** The entire portfolio (About, Skills, Projects, Education, Certifications, Contact) renders from static data files in `src/data/` with **zero network delays or backend dependencies**.
+- **Voiceflow AI Assistant:** Embedded official Voiceflow Webchat answering visitor questions accurately using the verified Knowledge Base in `voiceflow/Hari_Portfolio_Knowledge.md`.
+- **Zero Server Maintenance:** Zero custom backend servers required — deployed 100% on Vercel Edge.
 
 ---
 
 ## 📂 Project Structure
 
-```
+```text
 Portfolio/
 ├── frontend/                     # React Frontend Application
 │   ├── public/
@@ -50,40 +49,31 @@ Portfolio/
 │   │   │   ├── Hero.jsx
 │   │   │   ├── About.jsx
 │   │   │   ├── Skills.jsx
-│   │   │   ├── Projects.jsx      # Static project showcase
+│   │   │   ├── Projects.jsx      # Static project showcase (all 7 projects)
 │   │   │   ├── Education.jsx     # Academic timeline
 │   │   │   ├── Certifications.jsx# Credentials & SIH 2025
 │   │   │   ├── Contact.jsx
 │   │   │   ├── Footer.jsx
-│   │   │   └── Chatbot/          # Floating AI Assistant
-│   │   │       ├── Chatbot.jsx
-│   │   │       ├── ChatMessage.jsx
-│   │   │       └── ChatInput.jsx
+│   │   │   └── Chatbot/
+│   │   │       └── Chatbot.jsx   # Voiceflow Webchat embedded widget
+│   │   ├── config/
+│   │   │   └── voiceflow.js      # Centralized Voiceflow Webchat config
 │   │   ├── data/                 # Ground Truth Static Data
-│   │   │   ├── projects.js       # Verified projects & descriptions
+│   │   │   ├── projects.js       # Verified 7 projects & descriptions
 │   │   │   ├── skills.js         # Categorized tech stack
 │   │   │   └── resume.js         # Education, certifications, socials
 │   │   ├── App.js
 │   │   ├── App.css
 │   │   └── index.js
-│   ├── .env                      # REACT_APP_API_URL / VITE_API_URL
+│   ├── .env                      # REACT_APP_VOICEFLOW_PROJECT_ID
 │   └── package.json
 │
-├── backend/                      # Python FastAPI RAG Backend
-│   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py               # FastAPI app & CORS configuration
-│   │   ├── rag.py                # FAISS vector search & answer synthesis
-│   │   ├── embeddings.py         # SentenceTransformers loader
-│   │   ├── schemas.py            # Pydantic request/response models
-│   │   └── config.py             # Environment configuration
-│   ├── data/
-│   │   └── portfolio_knowledge.txt # RAG Knowledge Base
-│   ├── requirements.txt          # Python production dependencies
-│   └── README.md
+├── voiceflow/                    # Voiceflow Knowledge Base & Setup Guides
+│   ├── Hari_Portfolio_Knowledge.md # Complete portfolio knowledge document
+│   └── VOICEFLOW_SETUP.md        # Step-by-step Voiceflow integration guide
 │
-├── render.yaml                   # Render Blueprint for backend
-├── vercel.json                   # Vercel deployment configuration
+├── vercel.json                   # Vercel static deployment configuration
+├── DEPLOYMENT.md                 # Deployment instructions
 └── README.md
 ```
 
@@ -91,27 +81,7 @@ Portfolio/
 
 ## 🚀 Local Development Setup
 
-### 1. Run Backend (FastAPI RAG)
-
-```bash
-cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start backend server
-python -m uvicorn app.main:app --reload --port 8001
-```
-
-- API runs at: `http://localhost:8001`
-- Health check: `http://localhost:8001/health`
-- Interactive docs: `http://localhost:8001/docs`
-
-### 2. Run Frontend (React)
+### Run Frontend (React)
 
 ```bash
 cd frontend
@@ -127,30 +97,26 @@ npm start
 
 ---
 
-## 🌐 Production Deployment
+## 🤖 Voiceflow AI Assistant Setup
 
-### Frontend (Deploy to Vercel)
+1. Follow the full setup guide in [`voiceflow/VOICEFLOW_SETUP.md`](./voiceflow/VOICEFLOW_SETUP.md).
+2. Create an Assistant and Knowledge Base on [Voiceflow.com](https://www.voiceflow.com) using [`voiceflow/Hari_Portfolio_Knowledge.md`](./voiceflow/Hari_Portfolio_Knowledge.md).
+3. Set the anti-hallucination agent prompt provided in the guide.
+4. Copy your **Public Project ID** from Integrations / Web Chat and set `REACT_APP_VOICEFLOW_PROJECT_ID` in `frontend/.env`.
 
-1. Connect your repository to **Vercel**.
-2. Set Root Directory to `frontend`.
-3. Build Command: `npm run build`
-4. Output Directory: `build`
-5. Add Environment Variable:
-   - `REACT_APP_API_URL`: `https://your-rag-backend.onrender.com`
-   - `VITE_API_URL`: `https://your-rag-backend.onrender.com`
+---
 
-### Backend (Deploy to Render)
+## 🌐 Production Deployment (Vercel)
 
-1. Create a **New Web Service** on [Render](https://render.com).
-2. Connect your GitHub repository.
-3. Configure service settings:
-   - **Root Directory:** `backend`
-   - **Environment:** `Python 3`
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-4. Environment Variables:
-   - `PYTHON_VERSION`: `3.11.9`
-   - `ENVIRONMENT`: `production`
+1. Connect your GitHub repository to **Vercel**.
+2. Configure project settings:
+   - **Root Directory:** `frontend`
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `build`
+3. Add Environment Variables:
+   - `REACT_APP_VOICEFLOW_PROJECT_ID`: `YOUR_VOICEFLOW_PROJECT_ID`
+   - `REACT_APP_VOICEFLOW_VERSION_ID`: `production`
+4. Click **Deploy**.
 
 ---
 
@@ -158,10 +124,10 @@ npm start
 
 | To Update... | Modify File |
 | :--- | :--- |
-| **Projects** | `frontend/src/data/projects.js` & `backend/data/portfolio_knowledge.txt` |
-| **Skills** | `frontend/src/data/skills.js` & `backend/data/portfolio_knowledge.txt` |
-| **Education / Certifications** | `frontend/src/data/resume.js` & `backend/data/portfolio_knowledge.txt` |
-| **RAG Knowledge Base** | `backend/data/portfolio_knowledge.txt` |
+| **Projects (7 Projects)** | `frontend/src/data/projects.js` & `voiceflow/Hari_Portfolio_Knowledge.md` |
+| **Skills** | `frontend/src/data/skills.js` & `voiceflow/Hari_Portfolio_Knowledge.md` |
+| **Education / Certifications** | `frontend/src/data/resume.js` & `voiceflow/Hari_Portfolio_Knowledge.md` |
+| **AI Chatbot Knowledge** | `voiceflow/Hari_Portfolio_Knowledge.md` (re-sync on Voiceflow Knowledge Base) |
 
 ---
 
@@ -171,6 +137,11 @@ npm start
 - **Headline:** AI/ML Engineer | Fullstack Developer
 - **Education:** B.E. in CSE (AI & ML) @ Vel Tech High Tech (CGPA: 7.61 / 10.0, Graduating 2028)
 - **Certifications:** Infosys Springboard (Machine Learning, AI with Python, Java), SIH 2025 Participant
-- **Featured Systems:**
-  - **TalentFlow:** AI Hiring Intelligence ATS with FAISS & RAG (+30% candidate discovery boost)
-  - **AI Emergency Response System:** 3D tactical spatial mapping & rapid crisis dispatch
+- **Verified Projects (7):**
+  1. **TalentFlow:** Elite AI Hiring Intelligence System (ATS with FAISS & RAG, +30% discovery boost)
+  2. **AI Emergency Response System:** 3D tactical spatial mapping & rapid crisis dispatch
+  3. **Smart Traffic Management System:** Computer vision (YOLO) & RL adaptive traffic control (SIH 2025)
+  4. **Enterprise Document Intelligence Platform:** OCR & NLP entity recognition & PII redaction
+  5. **Real-Time Multilingual Lecture Assistant:** Whisper speech transcription & BART summarization
+  6. **TN Smart Public Transport Platform:** IoT telemetry & commuter transit portal
+  7. **Task Manager Platform:** Kanban collaboration tool with real-time state sync

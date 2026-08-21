@@ -1017,8 +1017,8 @@ main {
 
 /* Chat Window Modal */
 .chatbot-window {
-  width: 380px;
-  height: 540px;
+  width: 420px;
+  height: 620px;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 100px);
   background: #121214;
@@ -1029,6 +1029,92 @@ main {
   flex-direction: column;
   overflow: hidden;
   animation: chatFadeIn 0.25s var(--ease-out);
+}
+
+.voiceflow-setup-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: #0d0d0f;
+}
+
+.voiceflow-setup-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.voiceflow-setup-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.voiceflow-setup-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.voiceflow-instructions-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: left;
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.voiceflow-box-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 10px;
+}
+
+.voiceflow-instructions-box ol {
+  margin: 0 0 12px 18px;
+  padding: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.voiceflow-instructions-box strong {
+  color: var(--text-primary);
+}
+
+.voiceflow-instructions-box code {
+  background: var(--bg-elevated);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.75rem;
+}
+
+.voiceflow-box-note {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin: 0;
 }
 
 @keyframes chatFadeIn {

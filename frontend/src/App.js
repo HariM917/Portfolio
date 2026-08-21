@@ -88,7 +88,7 @@ function App() {
       {/* Footer */}
       <Footer />
 
-      {/* RAG-Powered AI Chatbot */}
+      {/* Voiceflow-Powered AI Chatbot */}
       <Chatbot />
     </div>
   );

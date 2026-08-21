@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ChatMessage from './ChatMessage';
-import ChatInput from './ChatInput';
+import React, { useEffect, useState } from 'react';
+import voiceflowConfig from '../../config/voiceflow';
 
 const SparklesIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -19,231 +18,112 @@ const CloseIcon = () => (
   </svg>
 );
 
-const TrashIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="3 6 5 6 21 6" />
-    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-  </svg>
-);
-
-const SUGGESTIONS = [
-  "Tell me about Hari",
-  "What projects has he built?",
-  "What are his AI/ML skills?",
-  "Tell me about TalentFlow",
-  "What is Hari's education?",
-  "How can I contact Hari?"
-];
-
-const INITIAL_WELCOME = {
-  id: 'welcome-msg',
-  sender: 'bot',
-  text: "👋 Hi! I'm **Hari's AI Assistant**, powered by a local RAG pipeline with FAISS vector search.\n\nAsk me anything about Hari's **skills, AI systems, background, or projects**!"
-};
-
-const getApiBaseUrl = () => {
-  // Support both Create-React-App and Vite env variables, with Render production fallback
-  if (process.env.REACT_APP_API_URL) {
-    return process.env.REACT_APP_API_URL.replace(/\/$/, '');
-  }
-  // Check Vite env safely
-  try {
-    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) {
-      return import.meta.env.VITE_API_URL.replace(/\/$/, '');
-    }
-  } catch (e) {
-    // Ignore
-  }
-  return 'https://portfolio-rag-backend-8c9f.onrender.com';
-};
-
 const Chatbot = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([INITIAL_WELCOME]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [statusMessage, setStatusMessage] = useState('');
-  const messagesEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [isConfigured, setIsConfigured] = useState(false);
+  const [showSetupModal, setShowSetupModal] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      scrollToBottom();
-    }
-  }, [messages, isOpen, isLoading]);
+    const projectID = voiceflowConfig.projectID;
 
-  const handleSendMessage = async (text) => {
-    if (!text.trim() || isLoading) return;
+    if (projectID && projectID !== 'YOUR_VOICEFLOW_PROJECT_ID') {
+      setIsConfigured(true);
 
-    const userMessageId = `user-${Date.now()}`;
-    const userMsg = {
-      id: userMessageId,
-      sender: 'user',
-      text: text.trim()
-    };
+      const scriptId = 'voiceflow-widget-script';
+      if (!document.getElementById(scriptId)) {
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.type = 'text/javascript';
+        script.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
 
-    setMessages((prev) => [...prev, userMsg]);
-    setIsLoading(true);
-    setStatusMessage('');
+        script.onload = () => {
+          if (window.voiceflow && window.voiceflow.chat) {
+            window.voiceflow.chat.load({
+              verify: { projectID: projectID },
+              url: voiceflowConfig.url || 'https://general-runtime.voiceflow.com',
+              versionID: voiceflowConfig.versionID || 'production',
+              voice: voiceflowConfig.voice || {
+                url: "https://runtime-api.voiceflow.com"
+              },
+              assistant: {
+                title: voiceflowConfig.assistant.title,
+                description: voiceflowConfig.assistant.description,
+                color: voiceflowConfig.assistant.color
+              }
+            });
+          }
+        };
 
-    // Cold-start timer notification for Render free-tier wakeups
-    const wakeUpTimer = setTimeout(() => {
-      setStatusMessage('AI assistant is waking up on Render (may take ~15s)...');
-    }, 4000);
-
-    const baseUrl = getApiBaseUrl();
-
-    try {
-      const response = await fetch(`${baseUrl}/api/chat`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: text.trim() })
-      });
-
-      clearTimeout(wakeUpTimer);
-      setStatusMessage('');
-
-      if (!response.ok) {
-        throw new Error(`Server responded with status ${response.status}`);
+        document.body.appendChild(script);
       }
-
-      const data = await response.json();
-      const botMsg = {
-        id: `bot-${Date.now()}`,
-        sender: 'bot',
-        text: data.answer || "I received your question but couldn't generate a response.",
-        sources: data.sources || []
-      };
-
-      setMessages((prev) => [...prev, botMsg]);
-    } catch (err) {
-      clearTimeout(wakeUpTimer);
-      console.warn('RAG Chatbot request failed:', err);
-
-      const errorMsg = {
-        id: `bot-err-${Date.now()}`,
-        sender: 'bot',
-        text: "The AI assistant is currently waking up or connecting to the RAG backend. Please try again in a moment, or reach out to Hari directly via email or LinkedIn!"
-      };
-      setMessages((prev) => [...prev, errorMsg]);
-    } finally {
-      setIsLoading(false);
-      setStatusMessage('');
+    } else {
+      setIsConfigured(false);
     }
-  };
+  }, []);
 
-  const handleClearChat = () => {
-    setMessages([INITIAL_WELCOME]);
-    setStatusMessage('');
-  };
+  // When configured, Voiceflow renders its own official launcher & UI
+  if (isConfigured) {
+    return null;
+  }
 
+  // Fallback setup guidance button when project ID is not yet provided in .env
   return (
     <div className="chatbot-wrapper">
-      {/* Floating Action Button */}
-      {!isOpen && (
+      {!showSetupModal && (
         <button
           className="chatbot-fab"
-          onClick={() => setIsOpen(true)}
-          aria-label="Open AI Assistant"
+          onClick={() => setShowSetupModal(true)}
+          aria-label="Open Voiceflow AI Assistant Setup"
+          id="voiceflow-chatbot-trigger"
         >
           <div className="fab-icon-glow" />
           <SparklesIcon />
-          <span className="fab-text">Ask AI</span>
+          <span className="fab-text">Ask Hari AI</span>
         </button>
       )}
 
-      {/* Chat Window */}
-      {isOpen && (
+      {showSetupModal && (
         <div className="chatbot-window">
-          {/* Header */}
           <div className="chatbot-header">
             <div className="header-info">
               <div className="header-icon-badge">
                 <SparklesIcon />
               </div>
               <div>
-                <h3 className="header-title">Hari's AI Assistant</h3>
-                <p className="header-subtitle">Powered by RAG & FAISS Vector Search</p>
+                <h3 className="header-title">Voiceflow AI Assistant</h3>
+                <p className="header-subtitle">Powered by Voiceflow Knowledge Base</p>
               </div>
             </div>
+            <button
+              onClick={() => setShowSetupModal(false)}
+              className="header-action-btn close-btn"
+              title="Close Setup"
+              aria-label="Close setup modal"
+            >
+              <CloseIcon />
+            </button>
+          </div>
 
-            <div className="header-actions">
-              <button
-                onClick={handleClearChat}
-                className="header-action-btn"
-                title="Clear Chat History"
-                aria-label="Clear chat"
-              >
-                <TrashIcon />
-              </button>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="header-action-btn close-btn"
-                title="Close Chat"
-                aria-label="Close chat"
-              >
-                <CloseIcon />
-              </button>
+          <div className="voiceflow-setup-body">
+            <div className="voiceflow-setup-icon">
+              <SparklesIcon />
             </div>
-          </div>
+            <h4 className="voiceflow-setup-title">Voiceflow Chatbot Ready</h4>
+            <p className="voiceflow-setup-desc">
+              Connect your Voiceflow project to activate the AI assistant.
+            </p>
 
-          {/* Messages Body */}
-          <div className="chatbot-body">
-            {messages.map((msg) => (
-              <ChatMessage key={msg.id} message={msg} />
-            ))}
-
-            {/* Loading / Status State */}
-            {isLoading && (
-              <div className="chat-loading-row">
-                <div className="chat-avatar bot-avatar">
-                  <SparklesIcon />
-                </div>
-                <div className="chat-typing-bubble">
-                  <span className="typing-dot" />
-                  <span className="typing-dot" />
-                  <span className="typing-dot" />
-                </div>
-              </div>
-            )}
-
-            {statusMessage && (
-              <div className="chat-status-banner">
-                <span>{statusMessage}</span>
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Suggestion Chips */}
-          <div className="chatbot-suggestions">
-            <span className="suggestions-label">Suggestions:</span>
-            <div className="suggestions-scroll">
-              {SUGGESTIONS.map((sug, idx) => (
-                <button
-                  key={idx}
-                  className="suggestion-chip"
-                  onClick={() => handleSendMessage(sug)}
-                  disabled={isLoading}
-                >
-                  {sug}
-                </button>
-              ))}
+            <div className="voiceflow-instructions-box">
+              <span className="voiceflow-box-tag">Quick Setup</span>
+              <ol>
+                <li>Create an assistant on <strong>Voiceflow.com</strong></li>
+                <li>Upload <code>voiceflow/Hari_Portfolio_Knowledge.md</code> to Knowledge Base</li>
+                <li>Copy your <strong>Public Project ID</strong> from Web Chat Settings</li>
+                <li>Add <code>REACT_APP_VOICEFLOW_PROJECT_ID</code> in <code>.env</code> or Vercel</li>
+              </ol>
+              <p className="voiceflow-box-note">
+                See <strong style={{ color: 'var(--accent)' }}>voiceflow/VOICEFLOW_SETUP.md</strong> for step-by-step guide.
+              </p>
             </div>
-          </div>
-
-          {/* Input Footer */}
-          <div className="chatbot-footer">
-            <ChatInput
-              onSendMessage={handleSendMessage}
-              disabled={isLoading}
-              isConnecting={Boolean(statusMessage)}
-            />
           </div>
         </div>
       )}
