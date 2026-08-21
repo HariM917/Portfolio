@@ -23,5 +23,22 @@
   <body>
     <noscript>You need to enable JavaScript to view Hari M's AI/ML Engineer portfolio.</noscript>
     <div id="root"></div>
+
+    <!-- Voiceflow AI Assistant Web Chat -->
+    <script type="text/javascript">
+      (function(d, t) {
+          var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+          v.onload = function() {
+            window.voiceflow.chat.load({
+              verify: { projectID: '6a869ba2aa108d478a890108' },
+              url: 'https://general-runtime.voiceflow.com',
+              voice: {
+                url: "https://runtime-api.voiceflow.com"
+              }
+            });
+          }
+          v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+      })(document, 'script');
+    </script>
   </body>
 </html>
