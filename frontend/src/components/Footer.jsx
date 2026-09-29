@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-inner">
         <span className="footer-text">
-          &copy; {new Date().getFullYear()} {personalInfo.name}. Engineered with React & Voiceflow AI.
+          &copy; {new Date().getFullYear()} {personalInfo.name}. Engineered with React & Botpress AI.
         </span>
         <div className="footer-links">
           <a href={personalInfo.github} target="_blank" rel="noopener noreferrer">GitHub</a>

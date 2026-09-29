@@ -9,7 +9,6 @@ import Education from './components/Education';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Chatbot from './components/Chatbot/Chatbot';
 
 import './App.css';
 
@@ -93,9 +92,6 @@ function App() {
 
       {/* Footer */}
       <Footer />
-
-      {/* Voiceflow-Powered AI Chatbot */}
-      <Chatbot />
     </div>
   );
 }
