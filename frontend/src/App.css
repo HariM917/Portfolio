@@ -222,6 +222,7 @@ main {
 /* ===== SECTION SHARED ===== */
 .section {
   padding: var(--space-4xl) var(--space-lg);
+  scroll-margin-top: 80px;
 }
 
 .section-inner {

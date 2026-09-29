@@ -44,6 +44,33 @@ export const educationData = [
   }
 ];
 
+export const experienceData = [
+  {
+    role: 'Project Developer',
+    company: 'AICTE IDEA LAB - VEL TECH HIGH TECH',
+    duration: 'Jul 2026 – Present',
+    location: 'Āvadi, Tamil Nadu, India (On-site)',
+    description: 'Contributing to project development and practical technology initiatives within an academic innovation lab environment.',
+    skills: ['Project Development', 'AI/ML', 'Software Engineering']
+  },
+  {
+    role: 'Product Photography Intern',
+    company: 'Nilgiris Super Market',
+    duration: 'Jul 2026 – Aug 2026',
+    location: 'Chennai, Tamil Nadu, India (Hybrid)',
+    description: 'Photographed 500+ retail products from multiple angles while maintaining consistent lighting, composition, and image quality. Worked within strict daily production targets and collaborated with the team to deliver product imagery.',
+    skills: ['Product Photography', 'Retail', 'Content Production']
+  },
+  {
+    role: 'Intern',
+    company: '8QueensTech',
+    duration: 'Jul 2026',
+    location: 'Chennai, Tamil Nadu, India (On-site)',
+    description: 'Internship experience involving exposure to Artificial Intelligence (AI) and Software Testing.',
+    skills: ['Artificial Intelligence (AI)', 'Software Testing']
+  }
+];
+
 export const certificationsData = [
   {
     title: 'Machine Learning with Scikit-Learn in Python',

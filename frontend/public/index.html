@@ -12,6 +12,22 @@
     <meta property="og:title" content="Hari M | AI/ML Engineer & Fullstack Developer" />
     <meta property="og:description" content="Personal portfolio and AI assistant for Hari M. Explore AI/ML systems, projects, and skills." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hari-m-portfolio.vercel.app/" />
+    <!-- TODO: Add og:image when a suitable image is available -->
+    <!-- <meta property="og:image" content="https://hari-m-portfolio.vercel.app/og-image.jpg" /> -->
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hari M | AI/ML Engineer & Fullstack Developer" />
+    <meta name="twitter:description" content="Personal portfolio and AI assistant for Hari M. Explore AI/ML systems, projects, and skills." />
+    <!-- TODO: Add twitter:image when a suitable image is available -->
+    <!-- <meta name="twitter:image" content="https://hari-m-portfolio.vercel.app/og-image.jpg" /> -->
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://hari-m-portfolio.vercel.app/" />
+
+    <!-- Favicon (Fallback to default React icon if none provided) -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -24,21 +40,6 @@
     <noscript>You need to enable JavaScript to view Hari M's AI/ML Engineer portfolio.</noscript>
     <div id="root"></div>
 
-    <!-- Voiceflow AI Assistant Web Chat -->
-    <script type="text/javascript">
-      (function(d, t) {
-          var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-          v.onload = function() {
-            window.voiceflow.chat.load({
-              verify: { projectID: '6a869ba2aa108d478a890108' },
-              url: 'https://general-runtime.voiceflow.com',
-              voice: {
-                url: "https://runtime-api.voiceflow.com"
-              }
-            });
-          }
-          v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-      })(document, 'script');
-    </script>
+    <!-- Voiceflow AI Assistant Web Chat is now managed by the React application component -->
   </body>
 </html>
