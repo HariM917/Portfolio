@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { voiceflowConfig } from '../../config/voiceflow';
 
 const Chatbot = () => {
@@ -16,9 +16,7 @@ const Chatbot = () => {
         window.voiceflow.chat.load({
           verify: { projectID: voiceflowConfig.projectID },
           url: voiceflowConfig.url,
-          versionID: voiceflowConfig.versionID,
-          voice: voiceflowConfig.voice,
-          assistant: voiceflowConfig.assistant
+          voice: voiceflowConfig.voice
         });
         setIsLoaded(true);
       }
